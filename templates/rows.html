@@ -1,0 +1,15 @@
+</div>
+
+{% for row in rows %}
+<div class="sixteen columns">
+<div class="row">
+  {% for photo in row %}
+    <div class="{{ photo.classes }}">
+      <img src="photos/{{ photo.filename }}" />
+    </div>
+  {% endfor %}
+</div>
+</div>
+{% endfor %}
+
+<div class="sixteen columns">
