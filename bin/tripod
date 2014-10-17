@@ -6,7 +6,7 @@ from tripod.core import main as tripod_main
 
 
 def main():
-    usage = "Usage: tripod [options] file"
+    usage = "Usage: tripod [options] files"
     parser = OptionParser(usage=usage)
 
     parser.add_option('-p', '--photos', dest='photos_dir', metavar='DIR',
@@ -21,7 +21,7 @@ def main():
         print 'ERROR: Missing file'
         sys.exit(1)
 
-    tripod_main(args[0], options)
+    tripod_main(args, options)
 
 
 if __name__ == '__main__':

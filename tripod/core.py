@@ -2,6 +2,7 @@ import os
 import misaka
 import yaml
 from jinja2 import Environment, FileSystemLoader
+from PIL import Image
 
 
 columns = {
@@ -45,18 +46,6 @@ columns_classes = {
 }
 
 
-class NotEnoughPhotosException(Exception):
-    pass
-
-
-class ConfigurationException(Exception):
-    pass
-
-
-class MissingPhotoException(Exception):
-    pass
-
-
 class RowLayout(object):
 
     def __init__(self, data, options, env):
@@ -68,21 +57,37 @@ class RowLayout(object):
         self.items = data['items']
 
         if sum(self.rows) != len(self.items):
-            raise ConfigurationException('wrong number of photos in layout')
+            raise Exception('wrong number of photos in layout')
 
         self.assert_photos_exist()
+        self.parsed_rows = self.collect_photo_info()
+        self.assert_photos_big_enough()
 
     def assert_photos_exist(self):
         for photo in self.items:
             full_path = os.path.join(self.options.photos_dir, photo)
             if not os.path.exists(full_path):
-                raise MissingPhotoException(photo)
+                raise Exception(photo)
+
+    def assert_photos_big_enough(self):
+        for row in self.parsed_rows:
+            for photo in row:
+                full_path = os.path.join(self.options.photos_dir,
+                                         photo['filename'])
+                col_width = columns[photo['columns']]
+                im = Image.open(full_path)
+                w, h = im.size
+
+                if w < col_width:
+                    raise Exception('Photo {} not wide enough. '
+                                    'Need {}px, got only {}px'.format(
+                                        photo['filename'], col_width, w))
 
     def render_template(self, template, values):
         t = self.env.get_template(template)
         return t.render(values)
 
-    def render(self):
+    def collect_photo_info(self):
         rows = []
         photo_filenames = self.items
 
@@ -98,24 +103,22 @@ class RowLayout(object):
 
                 classes = []
 
-                if row == 1:
-                    pass
+                if photo == 0:
+                    classes.append('alpha')
+
+                if photo == (row - 1):
+                    classes.append('omega')
+
+                classes.append(columns_classes[r])
+
+                if r in ['one', 'third']:
+                    classes.append('column')
                 else:
-                    if photo == 0:
-                        classes.append('alpha')
-
-                    if photo == (row - 1):
-                        classes.append('omega')
-
-                    classes.append(columns_classes[r])
-
-                    if r in ['one', 'third']:
-                        classes.append('column')
-                    else:
-                        classes.append('columns')
+                    classes.append('columns')
 
                 new_row.append({
                     'classes': ' '.join(classes),
+                    'columns': r,
                     'filename': photo_filenames[0]
                 })
 
@@ -123,25 +126,15 @@ class RowLayout(object):
 
             rows.append(new_row)
 
+        return rows
+
+    def render(self):
         context = {
-            'rows': rows,
+            'rows': self.parsed_rows,
             'options': self.options
         }
 
         return self.render_template('rows.html', context)
-
-
-class LayoutRenderer(object):
-
-    def __init__(self, data, options, env):
-        self.data = data
-        self.options = options
-        self.env = env
-
-        self.layout = RowLayout(data, options, env)
-
-    def render(self):
-        return self.layout.render()
 
 
 class TripodRenderer(misaka.HtmlRenderer):
@@ -159,27 +152,41 @@ class TripodRenderer(misaka.HtmlRenderer):
         if not data:
             return ''
 
-        r = LayoutRenderer(data, self.options, self.env)
+        r = RowLayout(data, self.options, self.env)
         return r.render()
 
 
-def main(filename, options):
-    with open(filename) as f:
-        data = f.read()
+class Tripod(object):
 
-    base = os.path.splitext(filename)[0]
+    def __init__(self, options):
+        self.options = options
+        templates_path = options.templates_dir or '../templates'
+        self.env = Environment(loader=FileSystemLoader(templates_path))
 
-    templates_path = options.templates_dir or '../templates'
-    env = Environment(loader=FileSystemLoader(templates_path))
+        r = TripodRenderer()
+        r.set_options(self.options, self.env)
+        self.markdown = misaka.Markdown(r, extensions=misaka.EXT_FENCED_CODE)
 
-    r = TripodRenderer()
-    r.set_options(options, env)
-    m = misaka.Markdown(r, extensions=misaka.EXT_FENCED_CODE)
-    html = m.render(data)
+    def render_template(self, template, values):
+        t = self.env.get_template(template)
+        return t.render(values)
 
-    with open('{}.html'.format(base), 'w') as f:
-        t = env.get_template('base.html')
-        f.write(t.render({
-            'content': html,
-            'options': options
-        }))
+    def process_file(self, filename):
+        with open(filename) as f:
+            data = f.read()
+
+        base = os.path.splitext(filename)[0]
+        html = self.markdown.render(data)
+
+        with open('{}.html'.format(base), 'w') as f:
+            f.write(self.render_template('base.html', {
+                'content': html,
+                'options': self.options
+            }))
+
+
+def main(filenames, options):
+    t = Tripod(options)
+
+    for f in filenames:
+        t.process_file(f)

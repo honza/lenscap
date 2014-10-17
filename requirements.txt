@@ -1,3 +1,4 @@
 misaka==1.0.2
-pyyaml
-jinja2
+jinja2==2.7.3
+pillow==2.6.1
+pyyaml==3.11
