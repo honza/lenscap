@@ -161,7 +161,7 @@ class RowLayout(object):
         return self.render_template('rows.html', context)
 
 
-class TripodRenderer(misaka.HtmlRenderer):
+class LenscapRenderer(misaka.HtmlRenderer):
 
     def set_options(self, options, env):
         self.options = options
@@ -180,7 +180,7 @@ class TripodRenderer(misaka.HtmlRenderer):
         return r.render()
 
 
-class Tripod(object):
+class Lenscap(object):
 
     def __init__(self, options):
         self.options = options
@@ -195,7 +195,7 @@ class Tripod(object):
 
         self.env = Environment(loader=FileSystemLoader(templates_path))
 
-        r = TripodRenderer()
+        r = LenscapRenderer()
         r.set_options(self.options, self.env)
         self.markdown = misaka.Markdown(r, extensions=misaka.EXT_FENCED_CODE)
 
@@ -229,7 +229,7 @@ class Tripod(object):
 
 
 def main(filenames, options):
-    t = Tripod(options)
+    lens = Lenscap(options)
 
     for f in filenames:
-        t.process_file(f)
+        lens.process_file(f)

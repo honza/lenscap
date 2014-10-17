@@ -1,6 +1,6 @@
-# Tripod
+# Lenscap
 
-Tripod is a static site generator for creating beautiful photo narratives
+Lenscap is a static site generator for creating beautiful photo narratives
 
 Write your stories in markdown and insert small snippets of code to add small
 groups of images.
@@ -51,13 +51,13 @@ And a markdown file of
     nisi euismod, id facilisis elit consequat. Nam eros magna, vulputate ac
     turpis quis, rhoncus euismod justo.
 
-You can produce content like [the demo page][1] by running `tripod kitten.md`.
+You can produce content like [the demo page][1] by running `lenscap kitten.md`.
 
 [1]: http://honza.ca/tripod/kitten.html
 
 # Installation
 
-`$ pip install tripod`
+`$ pip install lenscap`
 
 # Usage
 
@@ -67,25 +67,25 @@ photo layouts using fenced blocks.
 
 The fenced in block uses simple yaml syntax to specify your meta data.  All you
 really need to do is tell it how many rows of photos you want and how many
-photos are in each row.  Then you list the files and tripod does the rest.
+photos are in each row.  Then you list the files and lenscap does the rest.
 
 So, if you want to have a 2 photos over 3, you'd say `rows: 2, 3`.  If you want
 a single image, you can skip the `rows` directive.
 
-Tripod will check that your photos are big enough in terms of resolution and
-will refuse to continue if the photos are too small.  You can also tell tripod
+Lenscap will check that your photos are big enough in terms of resolution and
+will refuse to continue if the photos are too small.  You can also tell lenscap
 to resize your high resolution photos to just the right size.
 
-You invoke the `tripod` command on your file:
+You invoke the `lenscap` command on your file:
 
 ```
-$ tripod kitten.md
+$ lenscap kitten.md
 ```
 
 And this will create a file called `kitten.html` in the same directory.
 
 ```
-Usage: tripod [options] files
+Usage: lenscap [options] files
 
 Options:
   -h, --help                   show this help message and exit

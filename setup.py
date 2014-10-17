@@ -3,7 +3,7 @@ from setuptools import setup
 long_desc = open('README.md').read()
 
 setup(
-    name='tripod',
+    name='lenscap',
     version='0.0.1',
     url='',
     install_requires=[
@@ -18,7 +18,7 @@ setup(
     author_email='me@honza.ca',
     maintainer='Honza Pokorny',
     maintainer_email='me@honza.ca',
-    packages=['tripod'],
+    packages=['lenscap'],
     include_package_data=True,
-    scripts=['bin/tripod']
+    scripts=['bin/lenscap']
 )
