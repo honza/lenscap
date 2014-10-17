@@ -2,6 +2,7 @@ import os
 import misaka
 import yaml
 import hashlib
+from shutil import copyfile
 from jinja2 import Environment, FileSystemLoader
 from PIL import Image
 
@@ -183,7 +184,15 @@ class Tripod(object):
 
     def __init__(self, options):
         self.options = options
-        templates_path = options.templates_dir or '../templates'
+
+        templates_path = options.templates_dir or os.path.join(
+            os.path.dirname(__file__), '../templates')
+
+        self.stylesheet_path = options.stylesheet_path or os.path.join(
+            os.path.dirname(__file__), '../templates/style.css')
+        self.skeleton_path = os.path.join(os.path.dirname(__file__),
+                                          '../templates/skeleton.css')
+
         self.env = Environment(loader=FileSystemLoader(templates_path))
 
         r = TripodRenderer()
@@ -193,6 +202,15 @@ class Tripod(object):
     def render_template(self, template, values):
         t = self.env.get_template(template)
         return t.render(values)
+
+    def add_stylesheet(self, filename):
+        directory = os.path.dirname(os.path.abspath(filename))
+        stylesheet = os.path.join(directory, 'style.css')
+        skeleton = os.path.join(directory, 'skeleton.css')
+
+        if not os.path.exists(stylesheet):
+            copyfile(self.stylesheet_path, stylesheet)
+            copyfile(self.skeleton_path, skeleton)
 
     def process_file(self, filename):
         with open(filename) as f:
@@ -206,6 +224,8 @@ class Tripod(object):
                 'content': html,
                 'options': self.options
             }))
+
+        self.add_stylesheet(filename)
 
 
 def main(filenames, options):

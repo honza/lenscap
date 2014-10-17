@@ -1,0 +1,18 @@
+@import "skeleton.css";
+
+body {
+    font-family: 'Georgia';
+    font-size: 18px;
+    line-height: 140%;
+    font-weight: 400;
+    color: #333;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Helvetica Neue';
+    font-weight: 900;
+}
+
+img {
+    width: 100%;
+}
