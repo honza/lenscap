@@ -53,7 +53,7 @@ And a markdown file of
 
 You can produce content like [the demo page][1] by running `lenscap kitten.md`.
 
-[1]: http://honza.ca/tripod/kitten.html
+[1]: http://honza.ca/lenscap/kitten.html
 
 # Installation
 
