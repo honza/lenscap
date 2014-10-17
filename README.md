@@ -95,6 +95,11 @@ Options:
   -r, --resize                 Resize images (default: False)
 ```
 
+# Contributing
+
+Contributions are most welcome.  If you have any cool ideas, open a ticket.
+Especially design-related tweaks are welcome.
+
 # License
 
 BSD, short and sweet
