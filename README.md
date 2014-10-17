@@ -61,6 +61,40 @@ You can produce content like [the demo page][1] by running `tripod kitten.md`.
 
 # Usage
 
+Throw some high resolution photos into a `photos/` directory and then write
+your essay in a markdown file.  You can use regular markdown and specify your
+photo layouts using fenced blocks.
+
+The fenced in block uses simple yaml syntax to specify your meta data.  All you
+really need to do is tell it how many rows of photos you want and how many
+photos are in each row.  Then you list the files and tripod does the rest.
+
+So, if you want to have a 2 photos over 3, you'd say `rows: 2, 3`.  If you want
+a single image, you can skip the `rows` directive.
+
+Tripod will check that your photos are big enough in terms of resolution and
+will refuse to continue if the photos are too small.  You can also tell tripod
+to resize your high resolution photos to just the right size.
+
+You invoke the `tripod` command on your file:
+
+```
+$ tripod kitten.md
+```
+
+And this will create a file called `kitten.html` in the same directory.
+
+```
+Usage: tripod [options] files
+
+Options:
+  -h, --help                   show this help message and exit
+  -p DIR, --photos=DIR         Directory with photos (default: photos/)
+  -t DIR, --templates=DIR      Directory with templates (default: None)
+  -s FILE, --stylesheet=FILE   Stylesheet file
+  -r, --resize                 Resize images (default: False)
+```
+
 # License
 
 BSD, short and sweet
