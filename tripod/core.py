@@ -1,6 +1,7 @@
 import os
 import misaka
 import yaml
+import hashlib
 from jinja2 import Environment, FileSystemLoader
 from PIL import Image
 
@@ -46,6 +47,10 @@ columns_classes = {
 }
 
 
+def hash_file(filename):
+    return hashlib.sha1(open(filename).read()).hexdigest()
+
+
 class RowLayout(object):
 
     def __init__(self, data, options, env):
@@ -82,6 +87,24 @@ class RowLayout(object):
                     raise Exception('Photo {} not wide enough. '
                                     'Need {}px, got only {}px'.format(
                                         photo['filename'], col_width, w))
+
+                if self.options.resize:
+                    hash = hash_file(full_path)[:10]
+                    base, ext = os.path.splitext(photo['filename'])
+                    out = ''.join([base, '_', hash, ext])
+                    full_out = os.path.join(self.options.photos_dir, out)
+                    new_size = None
+
+                    new_width = col_width
+                    ratio = float(w) / float(h)
+                    new_height = int(round(new_width / ratio))
+
+                    new_size = (new_width, new_height)
+
+                    im.thumbnail(new_size)
+                    im.save(full_out, im.format)
+
+                    photo['filename'] = out
 
     def render_template(self, template, values):
         t = self.env.get_template(template)

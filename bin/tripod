@@ -15,6 +15,9 @@ def main():
     parser.add_option('-t', '--templates', dest='templates_dir', metavar='DIR',
                       help='Directory with templates (default: None)',
                       default=None)
+    parser.add_option('-r', '--resize', dest='resize', action='store_true',
+                      default=False, help='Resize images (default: False)')
+
     options, args = parser.parse_args()
 
     if len(args) == 0:
