@@ -186,12 +186,12 @@ class Lenscap(object):
         self.options = options
 
         templates_path = options.templates_dir or os.path.join(
-            os.path.dirname(__file__), '../templates')
+            os.path.dirname(__file__), 'templates')
 
         self.stylesheet_path = options.stylesheet_path or os.path.join(
-            os.path.dirname(__file__), '../templates/style.css')
+            os.path.dirname(__file__), 'templates/style.css')
         self.skeleton_path = os.path.join(os.path.dirname(__file__),
-                                          '../templates/skeleton.css')
+                                          'templates/skeleton.css')
 
         self.env = Environment(loader=FileSystemLoader(templates_path))
 
