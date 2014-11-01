@@ -185,8 +185,13 @@ class Lenscap(object):
     def __init__(self, options):
         self.options = options
 
+        if not options.theme:
+            self.theme = 'default'
+        else:
+            self.theme = options.theme
+
         templates_path = options.templates_dir or os.path.join(
-            os.path.dirname(__file__), 'templates')
+            os.path.dirname(__file__), 'templates', self.theme)
 
         self.stylesheet_path = options.stylesheet_path or os.path.join(
             os.path.dirname(__file__), 'templates/style.css')

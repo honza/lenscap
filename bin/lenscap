@@ -17,6 +17,8 @@ def main():
                       default=None)
     parser.add_option('-s', '--stylesheet', dest='stylesheet_path',
                       metavar='FILE', help='Stylesheet file', default=None)
+    parser.add_option('-m', '--theme', dest='theme', metavar='THEME',
+                      help='Theme (default, narrow)', default=None)
     parser.add_option('-r', '--resize', dest='resize', action='store_true',
                       default=False, help='Resize images (default: False)')
 
