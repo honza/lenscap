@@ -94,13 +94,23 @@ Options:
   -p DIR, --photos=DIR         Directory with photos (default: photos/)
   -t DIR, --templates=DIR      Directory with templates (default: None)
   -s FILE, --stylesheet=FILE   Stylesheet file
+  -m THEME, --theme=THEME      Theme (default, narrow)
   -r, --resize                 Resize images (default: False)
 ```
+
+# Themes
+
+Currently, there are only two themes: defaul and narrow.  The default theme
+uses a width of 16 skeleton columns and the narrow one uses a narrower 8 column
+width for text and expands to 16 for images.
+
+Adding a new theme is just a matter of copying the `lenscap/templates/default`
+directory and editing the `base.html` and `rows.html` files.
 
 # Contributing
 
 Contributions are most welcome.  If you have any cool ideas, open a ticket.
-Especially design-related tweaks are welcome.
+Especially design-related tweaks and new themes are welcome.
 
 # License
 
