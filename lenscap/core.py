@@ -58,7 +58,7 @@ class RowLayout(object):
         self.data = data
         self.options = options
         self.env = env
-        self.rows = data.get('rows', '1')
+        self.rows = str(data.get('rows', '1'))
         self.rows = map(int, self.rows.split(','))
         self.items = data['items']
 
