@@ -91,6 +91,7 @@ Usage: lenscap [options] files
 
 Options:
   -h, --help                   show this help message and exit
+  -o FILE, --output=FILE       Output filename, defaults to same but with .html
   -p DIR, --photos=DIR         Directory with photos (default: photos/)
   -t DIR, --templates=DIR      Directory with templates (default: None)
   -s FILE, --stylesheet=FILE   Stylesheet file

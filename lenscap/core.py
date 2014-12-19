@@ -221,10 +221,15 @@ class Lenscap(object):
         with open(filename) as f:
             data = f.read()
 
-        base = os.path.splitext(filename)[0]
+        if self.options.output_file:
+            filename = self.options.output_file
+        else:
+            base = os.path.splitext(filename)[0]
+            filename = '{}.html'.format(base)
+
         html = self.markdown.render(data)
 
-        with open('{}.html'.format(base), 'w') as f:
+        with open(filename, 'w') as f:
             f.write(self.render_template('base.html', {
                 'content': html,
                 'options': self.options

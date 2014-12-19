@@ -9,6 +9,8 @@ def main():
     usage = "Usage: lenscap [options] files"
     parser = OptionParser(usage=usage)
 
+    parser.add_option('-o', '--output', dest='output_file', metavar='FILE',
+                      help='Output filename, defaults to same but with .html')
     parser.add_option('-p', '--photos', dest='photos_dir', metavar='DIR',
                       help='Directory with photos (default: photos/)',
                       default='photos')
