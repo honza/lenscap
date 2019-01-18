@@ -101,7 +101,7 @@ Options:
 
 # Themes
 
-Currently, there are only two themes: defaul and narrow.  The default theme
+Currently, there are only two themes: default and narrow.  The default theme
 uses a width of 16 skeleton columns and the narrow one uses a narrower 8 column
 width for text and expands to 16 for images.
 
