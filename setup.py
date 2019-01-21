@@ -4,7 +4,7 @@ long_desc = open('README.md').read()
 
 setup(
     name='lenscap',
-    version='0.2.0',
+    version='0.2.1',
     url='',
     install_requires=[
         'misaka==1.0.2',
