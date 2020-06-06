@@ -27,7 +27,7 @@ def main():
     options, args = parser.parse_args()
 
     if len(args) == 0:
-        print 'ERROR: Missing file'
+        print('ERROR: Missing file')
         sys.exit(1)
 
     lenscap_main(args, options)

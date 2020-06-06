@@ -59,7 +59,7 @@ class RowLayout(object):
         self.options = options
         self.env = env
         self.rows = str(data.get('rows', '1'))
-        self.rows = map(int, self.rows.split(','))
+        self.rows = list(map(int, self.rows.split(',')))
         self.items = data['items']
 
         if sum(self.rows) != len(self.items):
