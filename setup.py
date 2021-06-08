@@ -9,7 +9,7 @@ setup(
     install_requires=[
         'misaka==1.0.2',
         'jinja2==2.7.3',
-        'pillow==2.6.1',
+        'pillow==8.2.0',
         'pyyaml==4.2b1'
     ],
     description='static photo story generator',
